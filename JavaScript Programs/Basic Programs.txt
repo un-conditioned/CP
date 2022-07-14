@@ -1,0 +1,121 @@
+
+// Find if a number is odd or even.
+function isEvenOrOdd(n) {
+  return n % 2 ? 'Odd' : 'Even';
+}
+
+console.log(isEvenOrOdd(10)); // => Even
+console.log(isEvenOrOdd(10001)); // => Odd
+
+
+// Lookup Table 
+const dictionary = {the: 22038615, be: 12545825, and: 10741073, of: 10343885, a: 10144200, in: 6996437, to: 6332195 /* ... */};
+
+function getWordFrequency(dictionary, word) {
+  return dictionary[word];
+}
+
+console.log(getWordFrequency(dictionary, 'the'));
+console.log(getWordFrequency(dictionary, 'in'));
+
+//You want to find duplicate words in an array
+
+function hasDuplicates(n) {
+  const duplicates = [];
+  let counter = 0; // debug
+
+  for (let outter = 0; outter < n.length; outter++) {
+    for (let inner = 0; inner < n.length; inner++) {
+      counter++; // debug
+
+      if(outter === inner) continue;
+
+      if(n[outter] === n[inner]) {
+        return true;
+      }
+    }
+  }
+
+  console.log(`n: ${n.length}, counter: ${counter}`); // debug
+  return false;
+}
+
+
+Binary Search 
+
+function indexOf(array, element, offset = 0) {
+  // split array in half
+  const half = parseInt(array.length / 2);
+  const current = array[half];
+
+  if(current === element) {
+    return offset + half;
+  } else if(element > current) {
+    const right = array.slice(half);
+    return indexOf(right, element, offset + half);
+  } else {
+    const left = array.slice(0, half)
+    return indexOf(left, element, offset);
+  }
+}
+
+// Usage example with a list of names in ascending order:
+const directory = ["Adrian", "Bella", "Charlotte", "Daniel", "Emma", "Hanna", "Isabella", "Jayden", "Kaylee", "Luke", "Mia", "Nora", "Olivia", "Paisley", "Riley", "Thomas", "Wyatt", "Xander", "Zoe"];
+console.log(indexOf(directory, 'Hanna'));   // => 5
+console.log(indexOf(directory, 'Adrian'));  // => 0
+console.log(indexOf(directory, 'Zoe'));     // => 18
+
+
+Merge Sort 
+
+/**
+ * Sort array in asc order using merge-sort
+ * @example
+ *    sort([3, 2, 1]) => [1, 2, 3]
+ *    sort([3]) => [3]
+ *    sort([3, 2]) => [2, 3]
+ * @param {array} array
+ */
+function sort(array = []) {
+  const size = array.length;
+  // base case
+  if (size < 2) {
+    return array;
+  }
+  if (size === 2) {
+    return array[0] > array[1] ? [array[1], array[0]] : array;
+  }
+  // slit and merge
+  const mid = parseInt(size / 2, 10);
+  return merge(sort(array.slice(0, mid)), sort(array.slice(mid)));
+}
+
+/**
+ * Merge two arrays in asc order
+ * @example
+ *    merge([2,5,9], [1,6,7]) => [1, 2, 5, 6, 7, 9]
+ * @param {array} array1
+ * @param {array} array2
+ * @returns {array} merged arrays in asc order
+ */
+function merge(array1 = [], array2 = []) {
+  const merged = [];
+  let array1Index = 0;
+  let array2Index = 0;
+  // merge elements on a and b in asc order. Run-time O(a + b)
+  while (array1Index < array1.length || array2Index < array2.length) {
+    if (array1Index >= array1.length || array1[array1Index] > array2[array2Index]) {
+      merged.push(array2[array2Index]);
+      array2Index += 1;
+    } else {
+      merged.push(array1[array1Index]);
+      array1Index += 1;
+    }
+  }
+  return merged;
+}
+
+
+=========
+Power Set
+
